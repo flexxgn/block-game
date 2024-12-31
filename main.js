@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let gravity = 0.9;
     let position = 0;
     let left = 50; // Initial horizontal position (percentage)
+    let moveSpeed = 0.5; // Speed of horizontal movement
+    let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
 
     function jump() {
         if (isJumping) return;
@@ -30,25 +32,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 20);
     }
 
-    function moveLeft() {
-        left -= 5;
-        if (left < 0) left = 0;
-        block.style.left = left + '%';
-    }
-
-    function moveRight() {
-        left += 5;
-        if (left > 100) left = 100;
-        block.style.left = left + '%';
+    function move() {
+        if (moveDirection !== 0) {
+            left += moveSpeed * moveDirection;
+            if (left < 0) left = 0;
+            if (left > 100) left = 100;
+            block.style.left = left + '%';
+        }
     }
 
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
             jump();
         } else if (event.code === 'KeyA') {
-            moveLeft();
+            moveDirection = -1;
         } else if (event.code === 'KeyD') {
-            moveRight();
+            moveDirection = 1;
         }
     });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.code === 'KeyA' || event.code === 'KeyD') {
+            moveDirection = 0;
+        }
+    });
+
+    setInterval(move, 20); // Call move function every 20ms for smooth movement
 });
