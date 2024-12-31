@@ -6,37 +6,39 @@ document.addEventListener('DOMContentLoaded', () => {
     let left = 50; // Initial horizontal position (percentage)
     let moveSpeed = 0.5; // Speed of horizontal movement
     let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
+    let velocity = 0; // Vertical velocity for smooth jumping
 
     function jump() {
         if (isJumping) return;
         isJumping = true;
-        let count = 0;
-        let upInterval = setInterval(() => {
-            if (count === 15) {
-                clearInterval(upInterval);
-                let downInterval = setInterval(() => {
-                    if (count === 0) {
-                        clearInterval(downInterval);
-                        isJumping = false;
-                    }
-                    position -= 5;
-                    count--;
-                    position = position * gravity;
-                    block.style.bottom = position + 'px';
-                }, 20);
+        velocity = 15; // Initial jump velocity
+        let jumpInterval = setInterval(() => {
+            if (position <= 0 && velocity <= 0) {
+                clearInterval(jumpInterval);
+                isJumping = false;
+                position = 0;
+                velocity = 0;
+                block.style.bottom = position + 'px';
+            } else {
+                velocity -= 1; // Gravity effect
+                position += velocity;
+                if (position < 0) position = 0;
+                block.style.bottom = position + 'px';
             }
-            position += 30;
-            count++;
-            position = position * gravity;
-            block.style.bottom = position + 'px';
         }, 20);
     }
 
     function move() {
         if (moveDirection !== 0) {
             left += moveSpeed * moveDirection;
-            if (left < 0) left = 0;
-            if (left > 100) left = 100;
+            if (left < 0) {
+                left = 0;
+                moveDirection = 1; // Bounce off the left wall
+            }
+            if (left > 100) {
+                left = 100;
+                moveDirection = -1; // Bounce off the right wall
+            }
             block.style.left = left + '%';
         }
     }
