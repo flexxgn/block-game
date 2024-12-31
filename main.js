@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
             jump();
-        } else if (event.code === 'A') {
+        } else if (event.code === 'KeyA') {
             moveLeft();
-        } else if (event.code === 'D') {
+        } else if (event.code === 'KeyD') {
             moveRight();
         }
     });
