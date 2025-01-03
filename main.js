@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const block = document.getElementById('block');
     const gameArea = document.getElementById('gameArea');
+    const ledges = document.querySelectorAll('.ledge');
     let isJumping = false;
     let canDoubleJump = false;
-    let gravity = 0.45;
+    let gravity = 0.4;
     let position = 0;
     let left = 50; // Initial horizontal position (percentage)
-    let moveSpeed = 1.3; // Speed of horizontal movement
+    let moveSpeed = 1.2; // Speed of horizontal movement
     let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
     let velocity = 0; // Vertical velocity for smooth jumping
 
@@ -15,13 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
     gameArea.style.height = '100vh';
 
     // Create particles for space background
-    for (let i = 0; i < 200; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = Math.random() * 100 + 'vh';
-        gameArea.appendChild(particle);
+    function createParticles() {
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = Math.random() * 100 + 'vh';
+            gameArea.appendChild(particle);
+        }
     }
+
+    createParticles();
+    setInterval(createParticles, 5000); // Create new particles every 5 seconds
 
     function jump() {
         if (isJumping) {
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 position += velocity;
                 if (position < 0) position = 0;
                 block.style.bottom = position + 'px';
+                checkLedgeCollision();
             }
         }, 20);
     }
@@ -63,6 +70,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             block.style.left = left + '%';
         }
+    }
+
+    function checkLedgeCollision() {
+        ledges.forEach(ledge => {
+            const ledgeRect = ledge.getBoundingClientRect();
+            const blockRect = block.getBoundingClientRect();
+            if (
+                blockRect.bottom >= ledgeRect.top &&
+                blockRect.top <= ledgeRect.bottom &&
+                blockRect.right >= ledgeRect.left &&
+                blockRect.left <= ledgeRect.right
+            ) {
+                position = window.innerHeight - ledgeRect.top - blockRect.height;
+                velocity = 0;
+                block.style.bottom = position + 'px';
+                isJumping = false;
+                canDoubleJump = true;
+            }
+        });
     }
 
     document.addEventListener('keydown', (event) => {
