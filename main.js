@@ -6,12 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let canDoubleJump = false;
     let gravity = 0.4;
     let position = 0;
-    let left = 50; // Initial horizontal position (percentage)
-    let moveSpeed = 1.2; // Speed of horizontal movement
-    let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
-    let velocity = 0; // Vertical velocity for smooth jumping
+    let left = 50; 
+    let moveSpeed = 1.2; 
+    let moveDirection = 0; 
+    let velocity = 0; 
 
-    // Adjust game area to fill the player's window
     gameArea.style.width = '100vw';
     gameArea.style.height = '100vh';
 
@@ -33,13 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isJumping) {
             if (canDoubleJump) {
                 canDoubleJump = false;
-                velocity = 15; // Initial jump velocity for double jump
+                velocity = 15; 
             }
             return;
         }
         isJumping = true;
         canDoubleJump = true;
-        velocity = 15; // Initial jump velocity
+        velocity = 15; 
         let jumpInterval = setInterval(() => {
             if (position <= 0 && velocity <= 0) {
                 clearInterval(jumpInterval);
@@ -62,11 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
             left += moveSpeed * moveDirection;
             if (left < 0) {
                 left = 0;
-                moveDirection = 0; // Stop movement at the left wall
+                moveDirection = 0; 
             }
             if (left > 100) {
                 left = 100;
-                moveDirection = 0; // Stop movement at the right wall
+                moveDirection = 0; 
             }
             block.style.left = left + '%';
         }
@@ -80,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 blockRect.bottom >= ledgeRect.top &&
                 blockRect.top <= ledgeRect.bottom &&
                 blockRect.right >= ledgeRect.left &&
-                blockRect.left <= ledgeRect.right
+                blockRect.left <= ledgeRect.right &&
+                velocity <= 0
             ) {
                 position = window.innerHeight - ledgeRect.top - blockRect.height;
                 velocity = 0;
@@ -107,5 +107,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    setInterval(move, 20); // Call move function every 20ms for smooth movement
+    setInterval(move, 20); 
 });
