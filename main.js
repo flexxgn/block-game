@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('startButton');
     const scoreDisplay = document.getElementById('score');
     let isGameRunning = false;
-    let moveDirection = 0; // -1 for up, 1 for down, 0 for no movement
-    let moveSpeed = 20; // Increased speed of vertical movement
+    let moveDirection = 0; // -1 for down, 1 for up, 0 for no movement
+    let moveSpeed = 17; // Increased speed of vertical movement
     let score = 0;
     let obstacleInterval;
+    let scoreInterval;
 
     function startGame() {
         isGameRunning = true;
@@ -19,12 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
         updateScore();
         createObstacles();
         gameLoop();
+        scoreInterval = setInterval(() => {
+            if (isGameRunning) {
+                score++;
+                updateScore();
+            }
+        }, 2000); // Increase score every 2 seconds
     }
 
     function endGame() {
         isGameRunning = false;
         startScreen.style.display = 'flex';
         clearObstacles();
+        clearInterval(scoreInterval);
     }
 
     function createObstacles() {
@@ -36,10 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameArea.appendChild(obstacle);
                 obstacle.addEventListener('animationend', () => {
                     obstacle.remove();
-                    if (isGameRunning) {
-                        score++;
-                        updateScore();
-                    }
                 });
             }
         }, 2000); // Create a new obstacle every 2 seconds
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveBlock() {
         if (!isGameRunning) return;
         let bottom = parseFloat(getComputedStyle(block).bottom);
-        bottom -= moveSpeed * moveDirection; // Inverted movement keys fixed
+        bottom += moveSpeed * moveDirection;
         if (bottom < 0) bottom = 0;
         if (bottom > gameArea.clientHeight - block.clientHeight) bottom = gameArea.clientHeight - block.clientHeight;
         block.style.bottom = bottom + 'px';
@@ -91,9 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (event) => {
         if (isGameRunning) {
             if (event.code === 'KeyW' || event.code === 'ArrowUp') {
-                moveDirection = 1; // Move up
+                moveDirection = -1; // Move up
             } else if (event.code === 'KeyS' || event.code === 'ArrowDown') {
-                moveDirection = -1; // Move down
+                moveDirection = 1; // Move down
             }
         }
     });
