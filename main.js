@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.getElementById('score');
     let isGameRunning = false;
     let moveDirection = 0; // -1 for up, 1 for down, 0 for no movement
-    let moveSpeed = 10; // Increased speed of vertical movement
+    let moveSpeed = 20; // Increased speed of vertical movement
     let score = 0;
+    let obstacleInterval;
 
     function startGame() {
         isGameRunning = true;
@@ -27,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createObstacles() {
-        setInterval(() => {
+        obstacleInterval = setInterval(() => {
             if (isGameRunning) {
                 const obstacle = document.createElement('div');
                 obstacle.classList.add('obstacle');
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function clearObstacles() {
+        clearInterval(obstacleInterval);
         const obstacles = document.querySelectorAll('.obstacle');
         obstacles.forEach(obstacle => obstacle.remove());
     }
@@ -60,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveBlock() {
         if (!isGameRunning) return;
         let bottom = parseFloat(getComputedStyle(block).bottom);
-        bottom += moveSpeed * moveDirection;
+        bottom -= moveSpeed * moveDirection; // Inverted movement keys fixed
         if (bottom < 0) bottom = 0;
         if (bottom > gameArea.clientHeight - block.clientHeight) bottom = gameArea.clientHeight - block.clientHeight;
         block.style.bottom = bottom + 'px';
@@ -89,9 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (event) => {
         if (isGameRunning) {
             if (event.code === 'KeyW' || event.code === 'ArrowUp') {
-                moveDirection = -1;
+                moveDirection = 1; // Move up
             } else if (event.code === 'KeyS' || event.code === 'ArrowDown') {
-                moveDirection = 1;
+                moveDirection = -1; // Move down
             }
         }
     });
