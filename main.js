@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let gravity = 0.9;
     let position = 0;
     let left = 50; // Initial horizontal position (percentage)
-    let moveSpeed = 0.5; // Speed of horizontal movement
+    let moveSpeed = 2; // Speed of horizontal movement
     let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
     let velocity = 0; // Vertical velocity for smooth jumping
 
