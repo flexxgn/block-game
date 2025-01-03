@@ -94,9 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (event) => {
         if (isGameRunning) {
-            if (event.code === 'KeyW' || event.code === 'ArrowUp') {
+            if (event.code === 'KeyS' || event.code === 'ArrowDown') {
                 moveDirection = -1; // Move up
-            } else if (event.code === 'KeyS' || event.code === 'ArrowDown') {
+            } else if (event.code === 'KeyW' || event.code === 'ArrowUp') {
                 moveDirection = 1; // Move down
             }
         }
