@@ -3,15 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameArea = document.getElementById('gameArea');
     const startScreen = document.getElementById('startScreen');
     const startButton = document.getElementById('startButton');
+    const scoreDisplay = document.getElementById('score');
     let isGameRunning = false;
     let moveDirection = 0; // -1 for up, 1 for down, 0 for no movement
-    let moveSpeed = 5; // Speed of vertical movement
+    let moveSpeed = 10; // Increased speed of vertical movement
+    let score = 0;
 
     function startGame() {
         isGameRunning = true;
         startScreen.style.display = 'none';
         block.style.bottom = '50%';
-        block.style.left = '10%';
+        block.style.left = '20%';
+        score = 0;
+        updateScore();
         createObstacles();
         gameLoop();
     }
@@ -31,6 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameArea.appendChild(obstacle);
                 obstacle.addEventListener('animationend', () => {
                     obstacle.remove();
+                    if (isGameRunning) {
+                        score++;
+                        updateScore();
+                    }
                 });
             }
         }, 2000); // Create a new obstacle every 2 seconds
@@ -72,6 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 endGame();
             }
         });
+    }
+
+    function updateScore() {
+        scoreDisplay.textContent = `Score: ${score}`;
     }
 
     document.addEventListener('keydown', (event) => {
