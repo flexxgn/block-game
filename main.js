@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const block = document.getElementById('block');
+    const gameArea = document.getElementById('gameArea');
     let isJumping = false;
+    let canDoubleJump = false;
     let gravity = 0.9;
     let position = 0;
     let left = 50; // Initial horizontal position (percentage)
@@ -8,9 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
     let velocity = 0; // Vertical velocity for smooth jumping
 
+    // Adjust game area to fill the player's window
+    gameArea.style.width = '100vw';
+    gameArea.style.height = '100vh';
+
     function jump() {
-        if (isJumping) return;
+        if (isJumping) {
+            if (canDoubleJump) {
+                canDoubleJump = false;
+                velocity = 15; // Initial jump velocity for double jump
+            }
+            return;
+        }
         isJumping = true;
+        canDoubleJump = true;
         velocity = 15; // Initial jump velocity
         let jumpInterval = setInterval(() => {
             if (position <= 0 && velocity <= 0) {
@@ -33,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
             left += moveSpeed * moveDirection;
             if (left < 0) {
                 left = 0;
-                moveDirection = 1; // Bounce off the left wall
+                moveDirection = 0; // Stop movement at the left wall
             }
             if (left > 100) {
                 left = 100;
-                moveDirection = -1; // Bounce off the right wall
+                moveDirection = 0; // Stop movement at the right wall
             }
             block.style.left = left + '%';
         }
