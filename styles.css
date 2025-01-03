@@ -26,6 +26,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #0000ff; /* Blue outline */
     z-index: 10;
 }
 
@@ -33,6 +34,17 @@ body {
     padding: 20px 40px;
     font-size: 24px;
     cursor: pointer;
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    border: 2px solid #0000ff; /* Blue outline */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+#startButton:hover {
+    background-color: #0000ff; /* Blue background on hover */
+    color: #000; /* Black text on hover */
 }
 
 #block {
@@ -41,7 +53,7 @@ body {
     left: 10%;
     width: 50px;
     height: 50px;
-    background-color: #000; /* Red block */
+    background-color: #ff0000; /* Red block */
     border: 2px solid #0000ff; /* Blue outline */
     transform: translateY(50%);
     transition: bottom 0.1s; /* Smooth movement */
