@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create particles for space background
     function createParticles() {
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 20; i++) { // Reduced the number of particles
             const particle = document.createElement('div');
             particle.classList.add('particle');
             particle.style.left = Math.random() * 100 + 'vw';
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const blockRect = block.getBoundingClientRect();
             if (
                 blockRect.bottom >= ledgeRect.top &&
-                blockRect.top <= ledgeRect.bottom &&
+                blockRect.bottom <= ledgeRect.top + 10 && // Adjusted to ensure standing on top
                 blockRect.right >= ledgeRect.left &&
                 blockRect.left <= ledgeRect.right &&
                 velocity <= 0
