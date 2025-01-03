@@ -18,16 +18,47 @@ body {
     border: 2px solid #fff; /* White border around game area */
 }
 
+#startScreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 10;
+}
+
+#startButton {
+    padding: 20px 40px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 #block {
     position: absolute;
-    bottom: 0;
-    left: 50%;
+    bottom: 50%;
+    left: 10%;
     width: 50px;
     height: 50px;
     background-color: #000; /* Red block */
     border: 2px solid #0000ff; /* Blue outline */
-    transform: translateX(-50%);
-    transition: left 0.1s, bottom 0.1s; /* Smooth movement */
+    transform: translateY(50%);
+    transition: bottom 0.1s; /* Smooth movement */
+}
+
+.obstacle {
+    position: absolute;
+    width: 50px;
+    height: 100px;
+    background-color: #fff; /* White obstacle */
+    left: 100%;
+    animation: moveObstacle 5s linear infinite;
+}
+
+@keyframes moveObstacle {
+    0% { left: 100%; }
+    100% { left: -50px; }
 }
 
 .ledge {
