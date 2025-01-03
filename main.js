@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     gameArea.style.width = '100vw';
     gameArea.style.height = '100vh';
 
+    // Create particles for space background
+    for (let i = 0; i < 100; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        gameArea.appendChild(particle);
+    }
+
     function jump() {
         if (isJumping) {
             if (canDoubleJump) {
