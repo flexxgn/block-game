@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameArea = document.getElementById('gameArea');
     let isJumping = false;
     let canDoubleJump = false;
-    let gravity = 0.9;
+    let gravity = 0.45;
     let position = 0;
     let left = 50; // Initial horizontal position (percentage)
-    let moveSpeed = 2; // Speed of horizontal movement
+    let moveSpeed = 1.3; // Speed of horizontal movement
     let moveDirection = 0; // -1 for left, 1 for right, 0 for no movement
     let velocity = 0; // Vertical velocity for smooth jumping
 
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gameArea.style.height = '100vh';
 
     // Create particles for space background
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         particle.style.left = Math.random() * 100 + 'vw';
