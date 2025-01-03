@@ -9,8 +9,8 @@ body {
 
 #gameArea {
     position: relative;
-    width: 800px;
-    height: 400px;
+    width: 100vw;
+    height: 100vh;
     background-color: #333; /* Dark grey game area */
     overflow: hidden;
     border: 2px solid #fff; /* White border around game area */
@@ -25,4 +25,11 @@ body {
     background-color: #ff0000; /* Red block */
     border: 2px solid #0000ff; /* Blue outline */
     transform: translateX(-50%);
+}
+
+.ledge {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background-color: #fff; /* White ledge */
 }
